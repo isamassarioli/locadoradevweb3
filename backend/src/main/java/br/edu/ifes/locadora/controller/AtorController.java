@@ -14,55 +14,44 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import br.edu.ifes.locadora.domain.Ator;
-import br.edu.ifes.locadora.repository.AtorRepository;
+import br.edu.ifes.locadora.service.AtorService;
 
 @RestController
 @RequestMapping("/api/atores")
 public class AtorController {
 
-    private final AtorRepository repository;
+    private final AtorService service;
 
-    public AtorController(AtorRepository repository) {
-        this.repository = repository;
+    public AtorController(AtorService service) {
+        this.service = service;
     }
 
     @GetMapping
     public List<Ator> listar() {
-        return repository.findAll();
+        return service.listar();
     }
 
     @GetMapping("/{id}")
     public Ator consultar(@PathVariable Long id) {
-        return buscarOuFalhar(id);
+        return service.consultar(id);
     }
 
     @PostMapping
     public ResponseEntity<Ator> incluir(@Valid @RequestBody Ator ator) {
-        ator.setId(null);
-        Ator salvo = repository.save(ator);
+        Ator salvo = service.incluir(ator);
         return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
 
     @PutMapping("/{id}")
     public Ator alterar(@PathVariable Long id, @Valid @RequestBody Ator ator) {
-        Ator existente = buscarOuFalhar(id);
-        existente.setNome(ator.getNome());
-        return repository.save(existente);
+        return service.alterar(id, ator);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        Ator existente = buscarOuFalhar(id);
-        repository.delete(existente);
+        service.excluir(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private Ator buscarOuFalhar(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Ator nao encontrado (id " + id + ")."));
     }
 }

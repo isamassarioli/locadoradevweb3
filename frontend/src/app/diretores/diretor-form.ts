@@ -4,30 +4,19 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ClienteService } from '../core/services/cliente.service';
+import { DiretorService } from '../core/services/diretor.service';
 
 @Component({
-  selector: 'app-cliente-form',
-  imports: [
-    ReactiveFormsModule,
-    RouterLink,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatButtonModule
-  ],
-  templateUrl: './cliente-form.html',
-  styleUrl: './cliente-form.css'
+  selector: 'app-diretor-form',
+  imports: [ReactiveFormsModule, RouterLink, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  templateUrl: './diretor-form.html',
+  styleUrl: './diretor-form.css'
 })
-export class ClienteForm {
-  private readonly service = inject(ClienteService);
+export class DiretorForm {
+  private readonly service = inject(DiretorService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
@@ -37,13 +26,7 @@ export class ClienteForm {
   readonly edicao = signal(false);
 
   readonly form = this.fb.nonNullable.group({
-    nome: ['', Validators.required],
-    cpf: ['', Validators.required],
-    endereco: [''],
-    sexo: [''],
-    tipo: [''],
-    comunicados: [false],
-    obs: ['']
+    nome: ['', Validators.required]
   });
 
   constructor() {
@@ -53,10 +36,10 @@ export class ClienteForm {
       this.id.set(id);
       this.edicao.set(true);
       this.service.consultar(id).subscribe({
-        next: (cliente) => this.form.patchValue(cliente),
+        next: (diretor) => this.form.patchValue({ nome: diretor.nome }),
         error: () => {
-          this.snackBar.open('Cliente nao encontrado.', 'Fechar', { duration: 4000 });
-          this.router.navigate(['/clientes']);
+          this.snackBar.open('Diretor nao encontrado.', 'Fechar', { duration: 4000 });
+          this.router.navigate(['/diretores']);
         }
       });
     }
@@ -75,10 +58,10 @@ export class ClienteForm {
 
     operacao.subscribe({
       next: () => {
-        this.snackBar.open('Cliente salvo com sucesso.', 'Fechar', { duration: 3000 });
-        this.router.navigate(['/clientes']);
+        this.snackBar.open('Diretor salvo com sucesso.', 'Fechar', { duration: 3000 });
+        this.router.navigate(['/diretores']);
       },
-      error: () => this.snackBar.open('Erro ao salvar cliente.', 'Fechar', { duration: 4000 })
+      error: () => this.snackBar.open('Erro ao salvar diretor.', 'Fechar', { duration: 4000 })
     });
   }
 }

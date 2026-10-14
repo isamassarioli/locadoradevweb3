@@ -7,9 +7,13 @@ export const routes: Routes = [
   { path: 'atores/novo', loadComponent: () => import('./atores/ator-form').then((m) => m.AtorForm) },
   { path: 'atores/:id/editar', loadComponent: () => import('./atores/ator-form').then((m) => m.AtorForm) },
 
-  { path: 'clientes', loadComponent: () => import('./clientes/cliente-list').then((m) => m.ClienteList) },
-  { path: 'clientes/novo', loadComponent: () => import('./clientes/cliente-form').then((m) => m.ClienteForm) },
-  { path: 'clientes/:id/editar', loadComponent: () => import('./clientes/cliente-form').then((m) => m.ClienteForm) },
+  { path: 'classes', loadComponent: () => import('./classes/classe-list').then((m) => m.ClasseList) },
+  { path: 'classes/novo', loadComponent: () => import('./classes/classe-form').then((m) => m.ClasseForm) },
+  { path: 'classes/:id/editar', loadComponent: () => import('./classes/classe-form').then((m) => m.ClasseForm) },
+
+  { path: 'diretores', loadComponent: () => import('./diretores/diretor-list').then((m) => m.DiretorList) },
+  { path: 'diretores/novo', loadComponent: () => import('./diretores/diretor-form').then((m) => m.DiretorForm) },
+  { path: 'diretores/:id/editar', loadComponent: () => import('./diretores/diretor-form').then((m) => m.DiretorForm) },
 
   { path: '**', redirectTo: '' }
 ];
