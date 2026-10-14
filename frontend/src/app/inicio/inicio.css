@@ -1,0 +1,10 @@
+.cartoes {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.cartao {
+  width: 280px;
+}

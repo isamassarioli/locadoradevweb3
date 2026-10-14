@@ -1,0 +1,28 @@
+# Dependencias
+node_modules/
+
+# Saidas de build
+dist/
+target/
+out-tsc/
+
+# Cache do Angular CLI
+.angular/
+
+# Banco H2 local do backend
+data/
+*.db
+
+# IDEs e editores
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+
+# Logs
+*.log
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

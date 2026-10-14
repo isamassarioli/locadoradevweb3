@@ -1,0 +1,12 @@
+.topo {
+  margin-bottom: 16px;
+}
+
+.tabela {
+  width: 100%;
+}
+
+.vazio {
+  padding: 16px 0;
+  color: var(--mat-sys-on-surface-variant);
+}

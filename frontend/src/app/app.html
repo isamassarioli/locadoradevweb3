@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <span>Sistema Videolocadora</span>
+  <span class="spacer"></span>
+  <a mat-button routerLink="/" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon>home</mat-icon> Inicio
+  </a>
+  <a mat-button routerLink="/atores" routerLinkActive="ativo">
+    <mat-icon>theater_comedy</mat-icon> Atores
+  </a>
+  <a mat-button routerLink="/clientes" routerLinkActive="ativo">
+    <mat-icon>people</mat-icon> Clientes
+  </a>
+</mat-toolbar>
+
+<main class="conteudo">
+  <router-outlet></router-outlet>
+</main>

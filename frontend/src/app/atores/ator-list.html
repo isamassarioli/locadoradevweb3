@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Cadastro de Atores</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="topo">
+      <a mat-flat-button color="primary" routerLink="/atores/novo">
+        <mat-icon>add</mat-icon> Novo Ator
+      </a>
+    </div>
+
+    <table mat-table [dataSource]="atores()" class="tabela">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let ator">{{ ator.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let ator">{{ ator.nome }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Acoes</th>
+        <td mat-cell *matCellDef="let ator">
+          <a mat-icon-button color="primary" [routerLink]="['/atores', ator.id, 'editar']" aria-label="Alterar">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <button mat-icon-button color="warn" (click)="excluir(ator)" aria-label="Excluir">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+      <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+    </table>
+
+    @if (atores().length === 0) {
+      <p class="vazio">Nenhum ator cadastrado.</p>
+    }
+  </mat-card-content>
+</mat-card>
