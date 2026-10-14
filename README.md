@@ -17,8 +17,8 @@ Abra **dois terminais**. O backend precisa estar no ar antes de usar o frontend.
 
 ```bash
 cd backend
-./mvnw spring-boot:run        # Linux / macOS
-mvnw.cmd spring-boot:run      # Windows (cmd ou PowerShell)
+./mvnw spring-boot:run          # Linux / macOS
+.\mvnw.cmd spring-boot:run      # Windows (PowerShell ou cmd)
 ```
 
 Espere aparecer `Started LocadoraApiApplication`. Teste em http://localhost:8081/api/atores
@@ -38,6 +38,9 @@ Abra http://localhost:4200 no navegador.
 
 - **"Erro ao carregar atores. O backend esta no ar?"**: o backend nao esta rodando,
   ou ainda esta subindo. Confira o terminal do backend.
+- **`'mvnw.cmd' não é reconhecido`** (Windows): confira se voce esta dentro da pasta
+  `backend` e use `.\mvnw.cmd` (com `.\` na frente). O PowerShell nao executa arquivos da
+  pasta atual sem o `.\`.
 - **`./mvnw: Permission denied`** (Linux/macOS): rode `chmod +x mvnw`.
 - **Porta 8081 ou 4200 ja em uso**: feche o outro programa que esta usando a porta.
 - **`ng` nao encontrado**: rode `npm install` dentro da pasta `frontend` antes do `npm start`.
