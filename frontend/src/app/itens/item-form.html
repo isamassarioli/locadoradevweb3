@@ -1,0 +1,8 @@
+<mat-card><mat-card-header><mat-card-title>{{ id ? "Alterar Item" : "Novo Item" }}</mat-card-title></mat-card-header><mat-card-content>
+<p>Cadastre primeiro o titulo correspondente ao exemplar.</p>
+<form [formGroup]="form" (ngSubmit)="salvar()" class="formulario">
+<mat-form-field appearance="outline"><mat-label>Numero de serie</mat-label><input matInput type="text" formControlName="numSerie"><mat-error>Informe numero de serie valido(a).</mat-error></mat-form-field>
+<mat-form-field appearance="outline"><mat-label>Data de aquisicao</mat-label><input matInput type="date" formControlName="dataAquisicao"><mat-error>Informe data de aquisicao valido(a).</mat-error></mat-form-field>
+<mat-form-field appearance="outline"><mat-label>Titulo</mat-label><mat-select formControlName="tituloId" >@for (opcao of titulos(); track opcao.id) { <mat-option [value]="opcao.id">{{ opcao.nome }}</mat-option> }</mat-select><mat-error>Selecione titulo.</mat-error></mat-form-field>
+<mat-form-field appearance="outline"><mat-label>Tipo de midia</mat-label><mat-select formControlName="tipoItem"><mat-option value="FITA">Fita</mat-option><mat-option value="DVD">DVD</mat-option><mat-option value="BLURAY">Blu-ray</mat-option></mat-select></mat-form-field>
+<div class="acoes"><button mat-flat-button type="submit" [disabled]="salvando() || carregando() || falha()">Salvar</button><a mat-button routerLink="/itens">Cancelar</a></div></form></mat-card-content></mat-card>

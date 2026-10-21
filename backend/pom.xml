@@ -15,7 +15,7 @@
     <artifactId>locadora-api</artifactId>
     <version>1.0.0</version>
     <name>locadora-api</name>
-    <description>API REST do Sistema Video Locadora - Sprint 1</description>
+    <description>API REST do Sistema Video Locadora - Sprints 1 e 2</description>
 
     <properties>
         <java.version>17</java.version>

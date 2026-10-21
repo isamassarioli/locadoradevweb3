@@ -1,0 +1,11 @@
+<mat-card><mat-card-header><mat-card-title>{{ id ? "Alterar Titulo" : "Novo Titulo" }}</mat-card-title></mat-card-header><mat-card-content>
+<p>Cadastre primeiro atores, diretor e classe.</p>
+<form [formGroup]="form" (ngSubmit)="salvar()" class="formulario">
+<mat-form-field appearance="outline"><mat-label>Nome</mat-label><input matInput type="text" formControlName="nome"><mat-error>Informe nome valido(a).</mat-error></mat-form-field>
+<mat-form-field appearance="outline"><mat-label>Ano</mat-label><input matInput type="number" formControlName="ano"><mat-error>Informe ano valido(a).</mat-error></mat-form-field>
+<mat-form-field appearance="outline"><mat-label>Sinopse</mat-label><textarea matInput formControlName="sinopse"></textarea><mat-error>Informe sinopse valido(a).</mat-error></mat-form-field>
+<mat-form-field appearance="outline"><mat-label>Categoria</mat-label><input matInput type="text" formControlName="categoria"><mat-error>Informe categoria valido(a).</mat-error></mat-form-field>
+<mat-form-field appearance="outline"><mat-label>Diretor</mat-label><mat-select formControlName="diretorId" >@for (opcao of diretores(); track opcao.id) { <mat-option [value]="opcao.id">{{ opcao.nome }}</mat-option> }</mat-select><mat-error>Selecione diretor.</mat-error></mat-form-field>
+<mat-form-field appearance="outline"><mat-label>Classe</mat-label><mat-select formControlName="classeId" >@for (opcao of classes(); track opcao.id) { <mat-option [value]="opcao.id">{{ opcao.nome }}</mat-option> }</mat-select><mat-error>Selecione classe.</mat-error></mat-form-field>
+<mat-form-field appearance="outline"><mat-label>Atores</mat-label><mat-select formControlName="atoresIds" multiple>@for (opcao of atores(); track opcao.id) { <mat-option [value]="opcao.id">{{ opcao.nome }}</mat-option> }</mat-select><mat-error>Selecione atores.</mat-error></mat-form-field>
+<div class="acoes"><button mat-flat-button type="submit" [disabled]="salvando() || carregando() || falha()">Salvar</button><a mat-button routerLink="/titulos">Cancelar</a></div></form></mat-card-content></mat-card>

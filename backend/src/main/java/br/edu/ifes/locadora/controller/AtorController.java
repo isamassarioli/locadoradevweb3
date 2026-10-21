@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifes.locadora.domain.Ator;
-import br.edu.ifes.locadora.exceptions.AtorNaoEncontradoException;
 import br.edu.ifes.locadora.exceptions.ErroPadrao;
-import br.edu.ifes.locadora.repository.AtorRepository;
+import br.edu.ifes.locadora.service.AtorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,16 +29,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "AtorController", description = "Fornece servicos web REST para acesso e manipulacao de dados de atores.")
 public class AtorController {
 
-    private final AtorRepository repository;
+    private final AtorService service;
 
-    public AtorController(AtorRepository repository) {
-        this.repository = repository;
+    public AtorController(AtorService service) {
+        this.service = service;
     }
 
     @GetMapping
     @Operation(description = "Retorna todos os atores cadastrados.")
     public List<Ator> listar() {
-        return repository.findAll();
+        return service.listar();
     }
 
     @GetMapping("/{id}")
@@ -52,7 +51,7 @@ public class AtorController {
         }
     )
     public Ator consultar(@PathVariable Long id) {
-        return buscarOuFalhar(id);
+        return service.consultar(id);
     }
 
     @PostMapping
@@ -65,8 +64,7 @@ public class AtorController {
         }
     )
     public ResponseEntity<Ator> incluir(@Valid @RequestBody Ator ator) {
-        ator.setId(null);
-        Ator salvo = repository.save(ator);
+        Ator salvo = service.incluir(ator);
         return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
 
@@ -82,28 +80,22 @@ public class AtorController {
         }
     )
     public Ator alterar(@PathVariable Long id, @Valid @RequestBody Ator ator) {
-        Ator existente = buscarOuFalhar(id);
-        existente.setNome(ator.getNome());
-        return repository.save(existente);
+        return service.alterar(id, ator);
     }
 
     @DeleteMapping("/{id}")
     @Operation(
         description = "Dado o id, exclui o ator correspondente.",
         responses = {
+            @ApiResponse(responseCode = "409", description = "Registro vinculado a titulos do acervo.", content = @Content(schema = @Schema(implementation = ErroPadrao.class))),
             @ApiResponse(responseCode = "204", description = "Caso o ator seja excluido com sucesso."),
             @ApiResponse(responseCode = "404", description = "Caso nao exista ator com o id informado.",
                 content = @Content(schema = @Schema(implementation = ErroPadrao.class)))
         }
     )
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        Ator existente = buscarOuFalhar(id);
-        repository.delete(existente);
+        service.excluir(id);
         return ResponseEntity.noContent().build();
     }
 
-    private Ator buscarOuFalhar(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new AtorNaoEncontradoException("Nao foi encontrado ator com o ID informado (id " + id + ")."));
-    }
 }

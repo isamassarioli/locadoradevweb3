@@ -12,3 +12,6 @@ a.ativo {
   font-weight: 600;
   text-decoration: underline;
 }
+
+mat-toolbar { overflow-x: auto; }
+mat-toolbar > a { flex-shrink: 0; }
