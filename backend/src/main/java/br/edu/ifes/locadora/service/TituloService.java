@@ -1,4 +1,5 @@
 package br.edu.ifes.locadora.service;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,11 @@ public class TituloService {
   titulo.setNome(dados.nome().trim()); titulo.setAno(dados.ano()); titulo.setSinopse(dados.sinopse()); titulo.setCategoria(dados.categoria().trim());
   titulo.setDiretor(diretores.findById(dados.diretorId()).orElseThrow(() -> new RecursoNaoEncontradoException("Diretor nao encontrado.")));
   titulo.setClasse(classes.findById(dados.classeId()).orElseThrow(() -> new RecursoNaoEncontradoException("Classe nao encontrada.")));
-  titulo.setAtores(dados.atoresIds().stream().distinct().map(id -> atores.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Ator nao encontrado: " + id))).toList());
+  List<Ator> selecionados = dados.atoresIds().stream().distinct().map(id -> atores.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Ator nao encontrado: " + id))).toList();
+  // A colecao gerenciada pelo Hibernate precisa ser mutavel: atualiza no lugar em vez de trocar por uma lista imutavel.
+  if (titulo.getAtores() == null) titulo.setAtores(new ArrayList<>());
+  titulo.getAtores().clear();
+  titulo.getAtores().addAll(selecionados);
   return repository.saveAndFlush(titulo);
  }
  @Transactional public void excluir(Long id) {

@@ -89,4 +89,4 @@ No frontend, execute `npm ci` e `npm start` em outro terminal.
 
 Os testes AcervoIntegrationTest verificam CRUD, relacionamentos, exclusoes protegidas, numero de serie duplicado, dados invalidos e a documentacao OpenAPI.
 
-Validacao desta entrega: build de producao Angular e compilacao Java/testes aprovados. A execucao dos testes JUnit neste ambiente ficou bloqueada pela resolucao de dependencias do plugin Maven Surefire. Execute `./mvnw.cmd clean test` localmente para executar toda a suite.
+Validacao desta entrega: build de producao Angular e suite JUnit (`mvn clean test`, 5 testes) aprovados. Fluxo verificado com a API rodando: CRUD de titulos e itens, alteracao de atores de um titulo, bloqueio de exclusao com vinculos (409) e Swagger em `/swagger-ui.html`.
